@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>The Game!</title>
+    <link rel="stylesheet" type="text/css" href="layout.css"></head>
+  <body>
+    <div id="containerDiv">
+        <div id="canvasDiv">
+        	<canvas id="myCanvas" width="600" height="600">
+        	Sorry, but your browser does not support the HTML5 canvas tag.
+        	</canvas>
+            
+            <canvas id="myLevel" width="3400" height="600" style="display: none">
+            Sorry, but your browser does not support the HTML5 canvas tag.
+            </canvas>
+        </div>
+        <div id="infoDiv">
+            <p>
+            <h2>Controls:</h2>
+            <table>
+                <tr>
+                    <td id="actionsTD">Movements: 
+                    <td id="controlsTD">Arrow Keys
+                </tr>
+                <tr>
+                    <td id="actionsTD">Jump:
+                    <td id="controlsTD">Spacebar
+                </tr>
+                <tr>
+                    <td id="actionsTD">Pause: 
+                    <td id="controlsTD">P
+                </tr>
+                <tr>
+                    <td id="actionsTD">Skip Frame: 
+                    <td id="controlsTD">O (When Paused)
+                </tr>
+                <tr>
+                    <td id="actionsTD">Skip Level: 
+                    <td id="controlsTD">L
+                </tr>
+                <tr>
+                    <td id="actionsTD">Render Spatial Debug: 
+                    <td id="controlsTD">S
+                </tr>
+            </table>
+            <br>
+            If you press a button not listed here and some weird stuff happens, then press it again and then never again!<br>
+            If you do not remember what button you pressed, then reload the page and think about what you've done!
+
+            <h2>Level One:</h2>
+            You can run around, collect coins, avoid/kill/getkilledby baddies and of course you can fall to your death.<br> 
+            You'll start with three lives but when they have depleted the page reloads and you have to start the whole mess again.
+
+            <h3>Fixed Bugs & Updates:</h3>
+            <h4>[22.04.2014]</h4>
+            <table>
+                <tr>
+                    <td><li>Added a power up that gives an extra life, more coins and more baddies.
+                </tr>
+                <tr>
+                    <td><li>You get points for collecting coins.
+                </tr>
+                <tr>
+                    <td><li>Added some baddies for you to kill or get killed by, whichever you prefer.
+                </tr>
+                <tr>
+                    <td><li>Checkpoint respawn system added. (This sounds so pro!)
+                </tr>
+            </table>
+            <h4>[04.04.2014]</h4>
+            <table>
+                <tr>
+                    <td><li>Dude suddenly turned to the left when landing from a jump.
+                </tr>
+                <tr>
+                    <td><li>Dude sometimes disappeared when jumping to the left.
+                </tr>
+                <tr>
+                    <td><li>Dude sometimes fell through the platforms.
+                </tr>
+                <tr>
+                    <td><li>One could multi-jump when under another platform.
+                </tr>
+                <tr>
+                    <td><li>Floating effect on the menu text and coins in level one is now a fancy sine wave!
+                </tr>   
+            </table>
+
+            <h2>Level Two:</h2>
+            Nothing much you can do here, you can run around the track which is NOT so buggy anymore (hooraayyyy)!<br> 
+            Baddies and collectables have not been added yet but bear with me, they're coming!
+            </p>
+            <h3>Fixed Bugs & Updates:</h3>
+            <h4>[22.04.2014]</h4>
+            <table>
+                <tr>
+                    <td><li>Filled in the black spots with some pretty tiles.
+                </tr>
+                <tr>
+                    <td><li>Dude stays on the track!
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script src="./javascript/globals.js"></script>
+    <script src="./javascript/consts.js"></script>
+    <script src="./javascript/util.js"></script>
+    <script src="./javascript/keys.js"></script>
+    <script src="./javascript/handleMouse.js"></script>
+
+    <script src="./javascript/gameFlowManager.js"></script>
+    <script src="./javascript/spatialManager.js"></script>
+    <script src="./javascript/menuManager.js"></script>
+    <script src="./javascript/entityManager.js"></script>
+
+    <script src="./javascript/Sprite.js"></script>
+    
+    <script src="./javascript/Entity.js"></script>
+    <script src="./javascript/Menu.js"></script>
+    <script src="./javascript/LevelOne.js"></script>
+    <script src="./javascript/DudeOne.js"></script>
+    <script src="./javascript/Collectables.js"></script>
+    <script src="./javascript/BaddieOne.js"></script>
+    <script src="./javascript/LevelTwo.js"></script>
+    <script src="./javascript/DudeTwo.js"></script>
+    <script src="./javascript/BaddieTwo.js"></script>    
+
+    <script src="./javascript/update.js"></script>
+    <script src="./javascript/render.js"></script>
+
+    <script src="./javascript/imagesPreload.js"></script>
+    <script src="./javascript/main.js"></script>
+
+    <script src="./javascript/THEGAME.js"></script>
+</body></html>
