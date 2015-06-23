@@ -35,20 +35,6 @@ BaddieTwo.prototype._walkDown = false;
 
 BaddieTwo.prototype._nextFrame = 0;
 
-BaddieTwo.prototype._randIndex = 0;
-BaddieTwo.prototype._oldIndex = 0;
-BaddieTwo.prototype._stackSize = 0;
-BaddieTwo.prototype._prevFrameX = 0;
-BaddieTwo.prototype._prevFrameY = 0;
-BaddieTwo.prototype._nextFrameX = 0;
-BaddieTwo.prototype._nextFrameY = 0;
-
-BaddieTwo.prototype._prevDirections = [];
-BaddieTwo.prototype._generatedPath = [];
-BaddieTwo.prototype._canFindPath = true;
-
-BaddieTwo.prototype._dirCounter = [0, 0, 0, 0];
-
 BaddieTwo.prototype.cellWidth = 24;
 BaddieTwo.prototype.cellHeight = 24;
 BaddieTwo.prototype.numCels = 2;
@@ -72,10 +58,14 @@ BaddieTwo.prototype.update = function (du) {
     if (this._isDeadNow)
         return entityManager.KILL_ME_NOW;
 
-    if (this._canFindPath)
-        this.findNextFrame();
-    
+    this.findNextFrame();
     this.moveToNextFrame();
+
+    // Follow the player if he comes to close.
+    var target = this.findPlayer();
+    if (target && target.isDude && !this._isDying) {
+        this.followPlayer(du, target);
+    }
 
     this.flipCounter += du;
     if (this.flipCounter >= this.flipThresh) {
@@ -86,178 +76,54 @@ BaddieTwo.prototype.update = function (du) {
     spatialManager.register(this);
 };
 
-// Artificial anxiety brought on by constant decision making!
-//
-// Dat Recursion!
-// Klára seinna!
-BaddieTwo.prototype.generateRandomDirection = function (availableDirections) {
-    /*
-        Old 0 > 3,0,1
-        Old 1 > 0,1,2
-        Old 2 > 1,2,3
-        Old 3 > 2,3,0
-    */
-    if (this._stackSize < 50)
-        this._stackSize++;
-    else {
-        this._randIndex = -1;
-        return this._randIndex;   
-    }
-    
-    if (this._randIndex === -1) {
-        // Do nothing!
-    }
-    else
-        this._oldIndex = this._randIndex;
-    
-    //var dirCount = 0;
-    
-    console.log("stack" + this._stackSize)
-    console.log("index" + this._randIndex)
-
-    if (this._oldIndex === 0)
-        availableDirections[2] = false;
-    if (this._oldIndex === 1)
-        availableDirections[3] = false;
-    if (this._oldIndex === 2)
-        availableDirections[0] = false;
-    if (this._oldIndex === 3)
-        availableDirections[1] = false;
-
-  /*  console.log("newAv")
-    console.log(availableDirections)
-
-    for (var i = 0; i < availableDirections.length; i++) {
-        if (availableDirections[i] === true)
-            dirCount++;
-    }
-
-    // Only 2 possible directions? Just stay on course!
-    for (var i = 0; i < availableDirections.length; i++) {
-        if (availableDirections[i] === true) {
-            // put genious stuff here!
-            if (dirCount < 2) {
-                return this._randIndex = availableDirections[i];
-            }
-        }
-    }*/
-
-    this._randIndex = Math.round(util.randRange(0, 3));
-
-    if (availableDirections[this._randIndex] === true) {
-        //this._prevDirections.push(this._randIndex);
-        this._dirCounter[this._randIndex]++;
-        console.log(this._dirCounter)
-        return this._randIndex;
-    }
-    else
-        this.generateRandomDirection(availableDirections);
-};
-
+// Artificial anxiety brought on by decision making!
+// In other words, random walk :P
 BaddieTwo.prototype.findNextFrame = function () {
     var availableDirections = [];
-    this._prevFrameX = this.cx;
-    this._prevFrameY = this.cy;
-    
-    if (this._generatedPath.length > 0) {
-        this._prevFrameX = this._nextFrameX;
-        this._prevFrameY = this._nextFrameY;
-    }
 
     for (var i = 0; i < entityManager._level[0].walkTileLoc.length; i++) {
-        if (this._prevFrameX === entityManager._level[0].walkTileLoc[i].cx &&
-            this._prevFrameY === entityManager._level[0].walkTileLoc[i].cy && 
-            this._nextFrame === 0) {
+        if (this.cx === entityManager._level[0].walkTileLoc[i].cx &&
+            this.cy === entityManager._level[0].walkTileLoc[i].cy && this._nextFrame === 0) {
 
-            availableDirections.push(entityManager._level[0].walkTileLoc[i].walkLeft);
-            availableDirections.push(entityManager._level[0].walkTileLoc[i].walkUp);
-            availableDirections.push(entityManager._level[0].walkTileLoc[i].walkRight);
-            availableDirections.push(entityManager._level[0].walkTileLoc[i].walkDown);
+            if (entityManager._level[0].walkTileLoc[i].walkLeft) {
+                availableDirections.push("left")
+            }
+            if (entityManager._level[0].walkTileLoc[i].walkUp) {
+                availableDirections.push("up")
+            }
+            if (entityManager._level[0].walkTileLoc[i].walkRight) {
+                availableDirections.push("right")           
+            }
+            if (entityManager._level[0].walkTileLoc[i].walkDown) {
+                availableDirections.push("down")
+            }
         }
     }
 
-    this.generateRandomDirection(availableDirections);
-    this._stackSize = 0;
+    var randIndex = Math.round(util.randRange(0, availableDirections.length-1));
 
-    switch (this._randIndex) {
-        case 0:
-            this._nextFrameX = this._prevFrameX - this.cellWidth;
-            this._nextFrameY = this._prevFrameY;
-        break;
-        case 1:
-            this._nextFrameX = this._prevFrameX;
-            this._nextFrameY = this._prevFrameY - this.cellHeight;
-        break;
-        case 2:
-            this._nextFrameX = this._prevFrameX + this.cellWidth;
-            this._nextFrameY = this._prevFrameY;
-        break;
-        case 3:
-            this._nextFrameX = this._prevFrameX;
-            this._nextFrameY = this._prevFrameY + this.cellHeight;
-        break;
-        case -1:
-            console.log("hello ")
-            this.findNextFrame();
-        break;
+    if (availableDirections[randIndex] === "left") {
+        this._walkLeft = true;
+        this._nextFrame = this.cx - this.cellWidth;
     }
-
-    this._generatedPath.push({
-        randIndex: this._randIndex, 
-        prevX: this._prevFrameX, 
-        prevY: this._prevFrameY, 
-        nextX: this._nextFrameX, 
-        nextY: this._nextFrameY});
-
-    //console.log(this._generatedPath)
-
-    this._canFindPath = false;
+    if (availableDirections[randIndex] === "up") {
+        this._walkUp = true;   
+        this._nextFrame = this.cy - this.cellHeight;
+    }
+    if (availableDirections[randIndex] === "right") {
+        this._walkRight = true;   
+        this._nextFrame = this.cx + this.cellWidth;
+    }
+    if (availableDirections[randIndex] === "down") {
+        this._walkDown = true;   
+        this._nextFrame = this.cy + this.cellHeight;
+    }
 };
 
 BaddieTwo.prototype.moveToNextFrame = function () {
     this.velX = 3;
     this.velY = 3;
 
-    switch (this._generatedPath[this._generatedPath.length-1].randIndex) {
-        case 0:
-            if (this.cx > this._generatedPath[this._generatedPath.length-1].nextX) {
-                this.cx -= this.velX;
-            }
-            else
-                this._canFindPath = true;
-        break;
-        case 1:
-            if (this.cy > this._generatedPath[this._generatedPath.length-1].nextY) {
-                this.cy -= this.velY;
-            }
-            else 
-                this._canFindPath = true;
-        break;
-        case 2:
-            if (this.cx < this._generatedPath[this._generatedPath.length-1].nextX) {
-                this.cx += this.velX;
-            }
-            else
-                this._canFindPath = true;
-        break;
-        case 3:
-            if (this.cy < this._generatedPath[this._generatedPath.length-1].nextY) {
-                this.cy += this.velY;
-            }
-            else
-                this._canFindPath = true;
-        break;
-    }
-    
-    /*if (this.cx > this._generatedPath[this._generatedPath.length-1].nextX)
-        this.cx -= this.velX;
-    if (this.cx < this._generatedPath[this._generatedPath.length-1].nextX)
-        this.cx += this.velX;
-    if (this.cy > this._generatedPath[this._generatedPath.length-1].nextY)
-        this.cy -= this.velY;
-    if (this.cy < this._generatedPath[this._generatedPath.length-1].nextY)
-        this.cy += this.velY;*/
-    /*
     switch (true) {
         case (this._walkLeft):
             if (this.cx > this._nextFrame) {
@@ -295,7 +161,18 @@ BaddieTwo.prototype.moveToNextFrame = function () {
                 this._walkDown = false;
             }
         break;
-    }*/
+    }
+};
+
+BaddieTwo.prototype.followPlayer = function (du, target) {
+    if (!this._isDying) {
+        if (this.cx < target.cx)
+            this.velX = 0.5 * du;
+        else
+            this.velX = 0.5 * -du;
+    }
+    else
+        this.velX = 0;
 };
 
 BaddieTwo.prototype.animate = function () {
@@ -338,19 +215,10 @@ BaddieTwo.prototype.render = function (ctx) {
     	this.frame);
 
     // draw line from baddie to dude
-    /*if (g_renderSpatialDebug) {
+    if (g_renderSpatialDebug) {
         ctx.strokeStyle = "red";
         ctx.moveTo(this.cx, this.cy);
         ctx.lineTo(entityManager._dude[0].cx, entityManager._dude[0].cy)
-        ctx.stroke();
-    }*/
-
-    if (g_renderSpatialDebug) {
-        ctx.strokeStyle = "black";
-        for (var i = 0; i < this._generatedPath.length; i++) {  
-            ctx.moveTo(this._generatedPath[i].prevX, this._generatedPath[i].prevY);
-            ctx.lineTo(this._generatedPath[i].nextX, this._generatedPath[i].nextY);
-        }
         ctx.stroke();
     }
 };
