@@ -6,12 +6,11 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
 Image.prototype.asyncLoad = function(src, asyncCallback) {
-    
-    this.onload = asyncCallback;
-    this.onerror = asyncCallback;
-    
-    console.log("requesting image src of ", src);
-    this.src = src;
+   this.onload = asyncCallback;
+   this.onerror = asyncCallback;
+
+   console.log("requesting image src of ", src);
+   this.src = src;
 };
 
 /*
@@ -27,58 +26,55 @@ Image.prototype.asyncLoad = function(src, asyncCallback) {
 function imagesPreload(requiredImages,
                        loadedImages,
                        completionCallback) {
+   var numImagesRequired;
+   var numImagesHandled = 0;
+   var currentName;
+   var currentImage;
+   var preloadHandler;
 
-    var numImagesRequired,
-        numImagesHandled = 0,
-        currentName,
-        currentImage,
-        preloadHandler;
+   numImagesRequired = Object.keys(requiredImages).length;
 
-    numImagesRequired = Object.keys(requiredImages).length;
+   /*
+   A handler which will be called when required images are finally
+   loaded (or when the fail to load).
 
-    /*
-        A handler which will be called when required images are finally
-        loaded (or when the fail to load).
-    
-        At the time of the call, `this` will point to an Image object, 
-        whose `name` property will have been set.
-    */
-    preloadHandler = function () {
+   At the time of the call, `this` will point to an Image object,
+   whose `name` property will have been set.
+   */
+   preloadHandler = function () {
+      console.log("preloadHandler called with this=", this);
+      loadedImages[this.name] = this;
 
-        console.log("preloadHandler called with this=", this);
-        loadedImages[this.name] = this;
+      if (0 === this.width) {
+         console.log("loading failed for", this.name);
+      }
 
-        if (0 === this.width) {
-            console.log("loading failed for", this.name);
-        }
+      // Allow this handler closure to eventually be GC'd (!)
+      this.onload = null;
+      this.onerror = null;
 
-        // Allow this handler closure to eventually be GC'd (!)
-        this.onload = null;
-        this.onerror = null;
+      numImagesHandled += 1;
 
-        numImagesHandled += 1;
+      if (numImagesHandled === numImagesRequired) {
+         console.log("all preload images handled");
+         console.log("loadedImages=", loadedImages);
+         console.log("");
+         console.log("performing completion callback");
 
-        if (numImagesHandled === numImagesRequired) {
-            console.log("all preload images handled");
-            console.log("loadedImages=", loadedImages);
-            console.log("");
-            console.log("performing completion callback");
+         completionCallback();
 
-            completionCallback();
+         console.log("completion callback done");
+         console.log("");
+      }
+   };
 
-            console.log("completion callback done");
-            console.log("");
-        }
-    };
+   for (currentName in requiredImages) {
+      if (requiredImages.hasOwnProperty(currentName)) {
+         console.log("preloading image", currentName);
+         currentImage = new Image();
+         currentImage.name = currentName;
 
-    for (currentName in requiredImages) {
-        if (requiredImages.hasOwnProperty(currentName)) {
-
-            console.log("preloading image", currentName);
-            currentImage = new Image();
-            currentImage.name = currentName;
-
-            currentImage.asyncLoad(requiredImages[currentName], preloadHandler);
-        }
-    }
+         currentImage.asyncLoad(requiredImages[currentName], preloadHandler);
+      }
+   }
 }

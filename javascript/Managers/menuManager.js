@@ -3,7 +3,6 @@
 // ============
 
 var menuManager = {
-
 	// PRIVATE DATA
 
 	_menu : [],
@@ -24,47 +23,39 @@ var menuManager = {
 		this._menu.push(new Menu(descr));
 	},
 
-
 	update: function(du) {
+		for (var c = 0; c < this._categories.length; ++c) {
+			var aCategory = this._categories[c];
+			var i = 0;
 
-	    for (var c = 0; c < this._categories.length; ++c) {
+			while (i < aCategory.length) {
+				var status = aCategory[i].update(du);
 
-	        var aCategory = this._categories[c];
-	        var i = 0;
+				if (status === this.KILL_ME_NOW) {
+					// Remove the dead guy, and shuffle the others down to
+					// prevent a confusing gap from appearing in the array.
+					aCategory.splice(i,1);
 
-	        while (i < aCategory.length) {
-
-	            var status = aCategory[i].update(du);
-
-	            if (status === this.KILL_ME_NOW) {
-	                // Remove the dead guy, and shuffle the others down to
-	                // prevent a confusing gap from appearing in the array.
-	                aCategory.splice(i,1);
-
-        			gameFlowManager.consumeEvent('progress');
-	            }
-	            else {
-	                ++i;
-	            }
-	        }
-	    }
+					gameFlowManager.consumeEvent('progress');
+				} else {
+					++i;
+				}
+			}
+		}
 	},
 
 	render: function(ctx) {
+		var debugX = 10, debugY = 100;
 
-	    var debugX = 10, debugY = 100;
+		for (var c = 0; c < this._categories.length; ++c) {
+			var aCategory = this._categories[c];
 
-	    for (var c = 0; c < this._categories.length; ++c) {
+			for (var i = 0; i < aCategory.length; ++i) {
+				aCategory[i].render(ctx);
+			}
 
-	        var aCategory = this._categories[c];
-
-	        for (var i = 0; i < aCategory.length; ++i) {
-
-	            aCategory[i].render(ctx);
-
-	        }
-	        debugY += 10;
-	    }
+			debugY += 10;
+		}
 	}
 }
 

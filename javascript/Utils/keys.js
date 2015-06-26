@@ -5,21 +5,21 @@
 var keys = [];
 
 function handleKeydown(evt) {
-    keys[evt.keyCode] = true;
+   keys[evt.keyCode] = true;
 }
 
 function handleKeyup(evt) {
-    keys[evt.keyCode] = false;
+   keys[evt.keyCode] = false;
 }
 
 function preventPageScroll(evt) {
-	switch (true)  {
-		case(keys[32] || keys[37] || keys[38] || keys[39] || keys[40]):
-			var key = evt.keyCode;
-		break;
-	}
+   switch (true)  {
+      case(keys[32] || keys[37] || keys[38] || keys[39] || keys[40]):
+         var key = evt.keyCode;
+      break;
+   }
 
-  	return !(evt.keyCode === key);
+   return !(evt.keyCode === key);
 }
 
 /*
@@ -27,14 +27,14 @@ function preventPageScroll(evt) {
     ..until the auto-repeat kicks in, that is.
 */
 function eatKey(keyCode) {
-    var isDown = keys[keyCode];
-    keys[keyCode] = false;
-    return isDown;
+   var isDown = keys[keyCode];
+   keys[keyCode] = false;
+   return isDown;
 }
 
 // A tiny little convenience function
 function keyCode(keyChar) {
-    return keyChar.charCodeAt(0);
+   return keyChar.charCodeAt(0);
 }
 
 window.addEventListener("keydown", handleKeydown);
