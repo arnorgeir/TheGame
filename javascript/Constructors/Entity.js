@@ -14,7 +14,7 @@ functions... shared data properties are potentially quite confusing.
 
 function Entity() {};
 
-Entity.prototype.setup = function (descr)
+Entity.prototype.setup = function (descr) {
    // Apply all setup properties from the (optional) descriptor
    for (var property in descr) {
       this[property] = descr[property];
