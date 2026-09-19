@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Game! — Master Portal</title>
+    <link rel="stylesheet" href="launcher.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="stars-bg"></div>
+    <div class="container">
+        <header class="hero-header">
+            <div class="logo-badge">RETRO ARCADE ADVENTURE</div>
+            <h1 class="game-title">THE GAME!</h1>
+            <p class="tagline">Choose your experience: play the modern enhanced remaster or revisit the original 2014 classic.</p>
+        </header>
+
+        <main class="editions-grid">
+            <!-- Enhanced Edition Card -->
+            <article class="edition-card enhanced-card">
+                <div class="badge-featured">RECOMMENDED</div>
+                <div class="card-glow"></div>
+                <div class="card-content">
+                    <div class="edition-icon">✨</div>
+                    <h2>Enhanced Edition</h2>
+                    <p class="edition-desc">The ultimate remaster featuring 60 FPS modular canvas engine, full procedural 8-bit audio, juiced platforming physics, completed Level 2 maze, and an epic Level 3 Boss encounter!</p>
+                    
+                    <ul class="feature-list">
+                        <li><span>⚡</span> 60 FPS Smooth Movement, Coyote Time & Jump Buffer</li>
+                        <li><span>🔊</span> Procedural 8-bit Web Audio SFX & Chiptune BGM</li>
+                        <li><span>💥</span> Full Arcade Juice: Particles, Screen Shake & Popups</li>
+                        <li><span>👾</span> 3 Complete Stages + <strong>Mega Baddie Boss Fight</strong></li>
+                        <li><span>🎮</span> Keyboard (WASD/Arrows), Gamepad & Touch Support</li>
+                        <li><span>🏆</span> High Scores & Persistent Best Times</li>
+                    </ul>
+
+                    <a href="enhanced/index.html" class="play-btn enhanced-btn">
+                        <span>LAUNCH ENHANCED</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </article>
+
+            <!-- Classic Edition Card -->
+            <article class="edition-card classic-card">
+                <div class="badge-classic">ORIGINAL 2014</div>
+                <div class="card-content">
+                    <div class="edition-icon">📦</div>
+                    <h2>Classic Edition</h2>
+                    <p class="edition-desc">The historic original JavaScript release from April 2014. Preserved 100% untouched with its original prototype engine, quirky physics, and nostalgic charm.</p>
+                    
+                    <ul class="feature-list classic-list">
+                        <li><span>📜</span> Untouched 2014 ES5 Prototype Engine</li>
+                        <li><span>🕹️</span> Original Level 1 Platformer & Early Level 2 Track</li>
+                        <li><span>🔧</span> Classic Spatial Debug Overlay (`S` key)</li>
+                        <li><span>💾</span> Authentic Historic Codebase & Notes</li>
+                        <li><span>⌨️</span> Original Arrow Keys + Space Controls</li>
+                    </ul>
+
+                    <a href="classic/THEGAME.html" class="play-btn classic-btn">
+                        <span>LAUNCH CLASSIC</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
+                </div>
+            </article>
+        </main>
+
+        <section class="info-section">
+            <div class="controls-summary">
+                <h3>🎮 Universal Controls</h3>
+                <div class="controls-grid">
+                    <div class="ctrl-pill"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or <kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd> <span>Move</span></div>
+                    <div class="ctrl-pill"><kbd>Space</kbd> <span>Jump / Start</span></div>
+                    <div class="ctrl-pill"><kbd>P</kbd> or <kbd>Esc</kbd> <span>Pause</span></div>
+                    <div class="ctrl-pill"><kbd>M</kbd> <span>Mute Audio</span></div>
+                    <div class="ctrl-pill"><kbd>F</kbd> <span>Fullscreen</span></div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="portal-footer">
+            <p>The Game! © 2014–2026 • Pair-programmed with Google Antigravity</p>
+        </footer>
+    </div>
+</body>
+</html>

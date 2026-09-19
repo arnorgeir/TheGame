@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Game! — Enhanced Edition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@600;800&family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-viewport-container">
+        <div class="cabinet-layout">
+            <!-- Top Arcade Marquee -->
+            <header class="cabinet-marquee">
+                <a href="../index.html" class="portal-back-btn" title="Back to Master Launcher">
+                    <span>◀ MASTER PORTAL</span>
+                </a>
+                <div class="marquee-title">THE GAME! <span class="badge-remaster">ENHANCED REMASTER</span></div>
+                <a href="../classic/THEGAME.html" class="classic-mode-btn" title="Switch to 2014 Classic Edition">
+                    <span>CLASSIC 2014 📦</span>
+                </a>
+            </header>
+
+            <!-- Main Screen Container -->
+            <div class="arcade-screen-frame" id="screenFrame">
+                <canvas id="gameCanvas" class="game-canvas" width="800" height="600"></canvas>
+                <div id="hudContainer"></div>
+                <div class="crt-overlay"></div>
+            </div>
+
+            <!-- Quick Help Bar -->
+            <footer class="controls-hint-bar">
+                <span><strong>MOVE:</strong> WASD / Arrows</span>
+                <span><strong>JUMP:</strong> Spacebar</span>
+                <span><strong>PAUSE:</strong> P / Esc</span>
+                <span><strong>MUTE:</strong> M</span>
+                <span><strong>FULLSCREEN:</strong> F</span>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Standalone Bundle (Runs on both file:// and http:// protocols without CORS issues) -->
+    <script src="bundle.js"></script>
+</body>
+</html>

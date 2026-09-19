@@ -1,0 +1,83 @@
+body {
+	background-color: rgb(0,0,0);
+	color: rgb(255,255,255);
+}
+
+h1, h2, h3 {
+	color: rgb(255,150,0);
+
+	text-decoration:underline
+}
+
+h4 {
+	color: rgb(140,140,140);
+}
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td {
+	width: 50%;
+}
+
+li {
+	width: 50%;
+	
+	margin-left: auto;
+	margin-right: auto;
+
+	text-align: left;
+}
+
+#actionsTD {
+	color: rgb(140,140,140);
+	
+	font-weight: bold;
+	text-align: right;
+}
+
+#controlsTD {
+	text-align: left;
+
+	padding-left: 10px;
+}
+
+#containerDiv {
+	border: 3px dashed rgba(0, 0, 0, 1);
+	background-color: rgba(150, 150, 150, 0.3);
+
+	width: 75%;
+	height: 100%;
+
+	overflow: auto;
+
+  	margin-left: auto;
+  	margin-right: auto;
+}
+
+#canvasDiv {
+	width: 100%;
+	height: inherit;
+
+	margin-top: 10px;
+	
+	text-align: center;
+}
+
+#infoDiv {
+	width: inherit;
+	height: inherit;
+
+	margin-left: auto;
+	margin-right: auto;
+
+	text-align: center;
+
+	margin-bottom: 10px;
+}
+
+canvas {
+	display: inline;
+}
